@@ -8,9 +8,49 @@ public class Cita {
     // pasaporte
     private String numero_Pasaporte;
     private String fecha_Expedicion, fecha_Vencimiento;
-    // Lugar de Oficina de Secretaría de Exteriores
+    // Lugar de Oficina de Secretaría de Exteriores, fecha Cita
     private String ciudadSRE, estadoSRE;
+    private String fechaCita, horaCita;
+    private String motivoCita;
+
+    private String estadoCita; //activa, cancelada.
     
+    
+    // CONSTRUCTOR
+    public Cita(){
+        this.estadoCita = "activa";
+    }
+    // inicializar una cita con datos más básicos
+    public Cita(String nombres, String apellido_Paterno, String apellido_Materno, String fecha_Nacimiento, String curp){
+        this.nombres = nombres;
+        this.apellido_Paterno = apellido_Paterno;
+        this.apellido_Materno = apellido_Materno;
+        this.fecha_Nacimiento = fecha_Nacimiento;
+        this.curp = curp;
+        this.estadoCita = "activa";
+    }
+    // inicializar una cita con todos sus datos (solo para en las pruebas tener ya casos registrados, en las otras se van registrando poco a poco)
+    public Cita(String nombres, String apellido_Paterno, String apellido_Materno, String fecha_Nacimiento, String curp, String numero_Pasaporte, String fecha_Expedicion, String fecha_Vencimiento, String estadoSRE, String ciudadSRE, String fechaCita, String horaCita, String motivoCita){
+        this.nombres = nombres;
+        this.apellido_Paterno = apellido_Paterno;
+        this.apellido_Materno = apellido_Materno;
+        this.fecha_Nacimiento = fecha_Nacimiento;
+        this.curp = curp;
+        
+        this.numero_Pasaporte = numero_Pasaporte;
+        this.fecha_Expedicion = fecha_Expedicion;
+        this.fecha_Vencimiento = fecha_Vencimiento;
+        
+        this.estadoSRE = estadoSRE;
+        this.ciudadSRE = ciudadSRE;
+        
+        this.fechaCita = fechaCita;
+        this.horaCita = horaCita;
+        this.motivoCita = motivoCita;
+        this.estadoCita = "Activa";
+    }
+
+
     /************.SETTERS.**************/
     // Registrar información personal
     public void setNombres(String nombres) {
@@ -40,13 +80,32 @@ public class Cita {
         this.fecha_Vencimiento = fecha_Vencimiento;
     }
     
-    // Registrar información oficina
+    // Registrar información de la cita (ciudad, estado, fecha, hora y motivo)
     public void setCiudadSRE(String ciudadSRE) {
         this.ciudadSRE = ciudadSRE;
     }
     public void setEstadoSRE(String estadoSRE) {
         this.estadoSRE = estadoSRE;
     }
+    public void setFechaCita(String fechaCita) {
+        this.fechaCita = fechaCita;
+    }
+    public void setHoraCita(String horaCita) {
+        this.horaCita = horaCita;
+    }
+    public void setMotivoCita(String motivoCita) {
+        this.motivoCita = motivoCita;
+    }
+
+    // Estado de la cita
+    public void setEstadoCitaActivo(boolean opc) {
+        if (opc) {
+            this.estadoCita = "Activa";
+        } else {
+            this.estadoCita = "Cancelada";
+        }
+    }
+
     /************.GET.**************/
     // Registrar información personal
     public String getNombres() {
@@ -64,7 +123,7 @@ public class Cita {
     public String getCurp() {
         return curp;
     }
-    // Registrar información pasaporte
+    // Obtener información del pasaporte (número, expedición y vencimiento)
     public String getNumero_Pasaporte() {
         return numero_Pasaporte;
     }
@@ -74,16 +133,28 @@ public class Cita {
     public String getFecha_Vencimiento() {
         return fecha_Vencimiento;
     }
-    // Registrar información oficina
-    public String getCiudadSRE() {
-        return ciudadSRE;
-    }
+    // Recuperar información de la cita (ciudad, estado, fecha, hora y motivo)
     public String getEstadoSRE() {
         return estadoSRE;
     }
+    public String getCiudadSRE() {
+        return ciudadSRE;
+    }
+    public String getFechaCita() {
+        return fechaCita;
+    }
+    public String getHoraCita() {
+        return horaCita;
+    }
+    public String getMotivoCita() {
+        return motivoCita;
+    }
+    public String getEstadoCita() {
+        return estadoCita;
+    }
+    
     /************.CLASS METHODS.**************/
     // 
-
-
+    
     
 }
