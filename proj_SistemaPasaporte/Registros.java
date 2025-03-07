@@ -63,28 +63,34 @@ public class Registros {
         // **************************   El código abajo es para que corra en consola, no con GUI
         Scanner myInput = new Scanner(System.in);
         boolean running = true;
-        int opc;    // 1: crear cita    2: Ver mis citas    
+        int opc;    // 1: crear cita    2: Ver mis citas   
+         
         String nameString, apePString, apeMString, fechaString, curpString; // variables para insertar datos personales en caso "crear cita"
         String numPassString, fechaExpString, fechaVencString; // variables para insertar datos de pasaporte en caso "crear cita"
         String ciudadString, estadoString, fechaCitaString, horaCitaString, motivoString; // variables para insertar datos de la cita en caso "crear cita"
+        int idCita = 0;     // el id será el número que ocupa en el arreglo
+
+        //inicializar para testing
+        arr[0] = new Cita("Lucio", "Ruiz", "Sepulveda", "2004-09-17", "RUSL040917HMCZPCA4", "H3224733", "2015-09-07", "2016-09-07", "Puebla", "Cholula", "2025-03-18", "10:40 AM", "Renovación", idCita);   idCita+=1;
+        arr[1] = new Cita("Elena", "Vargas", "Jiménez", "1999-12-08", "VAJE991208FMCZPCA6", "V7890123", "2021-09-28", "2026-09-28", "Querétaro", "Santiago de Querétaro", "2025-04-18", "13:00 PM", "Primera vez", idCita); idCita+=1;
+        arr[2] = new Cita("Ana", "García", "López", "1995-03-22", "GALN950322MMCZPCA7", "G1234567", "2020-01-15", "2025-01-15", "Ciudad de México", "Coyoacán", "2025-04-02", "09:00 AM", "Primera vez", idCita);   idCita+=1;
+        arr[3] = new Cita("Carlos", "Pérez", "Martínez", "1988-11-10", "PEMC881110HMCZPCA1", "P9876543", "2018-07-20", "2023-07-20", "Jalisco", "Guadalajara", "2025-03-25", "14:30 PM", "Renovación", idCita); idCita+=1;
+        arr[4] = new Cita("Sofía", "Hernández", "González", "2001-07-05", "HEGS010705FMCZPCA9", "H5678901", "2022-05-10", "2027-05-10", "Nuevo León", "Monterrey", "2025-04-10", "11:15 AM", "Primera vez", idCita);    idCita+=1;
+        arr[5] = new Cita("Lucio", "Ruiz", "Sepulveda", "2004-09-17", "RUSL040917HMCZPCA4", "H3224733", "2015-09-07", "2016-09-07", "Puebla", "Cholula", "2025-05-10", "14:30 PM", "Renovación", idCita);   idCita+=1;
+        arr[0].setEstadoCitaActivo(false); // cambio el primer registro a Inactivo
+        
+        arrIndex = 6;
+
         do {
             clearScreen();
-            System.out.println("Sistema de citas SRE");
+            System.out.println("**************************************************");
+            System.out.println("            Sistema de citas SRE");
             System.out.println("[1] Agendar Cita   [2] Consultar Citas  [3] Salir");
             opc = myInput.nextInt();
             myInput.nextLine();
             clearScreen();
 
-            //inicializar para testing
-            arr[0] = new Cita("Lucio", "Ruiz", "Sepulveda", "2004-09-17", "RUSL040917HMCZPCA4", "H3224733", "2015-09-07", "2016-09-07", "Puebla", "Cholula", "2025-03-18", "10:40 AM", "Renovación");
-            arr[1] = new Cita("Elena", "Vargas", "Jiménez", "1999-12-08", "VAJE991208FMCZPCA6", "V7890123", "2021-09-28", "2026-09-28", "Querétaro", "Santiago de Querétaro", "2025-04-18", "13:00 PM", "Primera vez");
-            arr[2] = new Cita("Ana", "García", "López", "1995-03-22", "GALN950322MMCZPCA7", "G1234567", "2020-01-15", "2025-01-15", "Ciudad de México", "Coyoacán", "2025-04-02", "09:00 AM", "Primera vez");
-            arr[3] = new Cita("Carlos", "Pérez", "Martínez", "1988-11-10", "PEMC881110HMCZPCA1", "P9876543", "2018-07-20", "2023-07-20", "Jalisco", "Guadalajara", "2025-03-25", "14:30 PM", "Renovación");
-            arr[4] = new Cita("Sofía", "Hernández", "González", "2001-07-05", "HEGS010705FMCZPCA9", "H5678901", "2022-05-10", "2027-05-10", "Nuevo León", "Monterrey", "2025-04-10", "11:15 AM", "Primera vez");
-            arr[5] = new Cita("Lucio", "Ruiz", "Sepulveda", "2004-09-17", "RUSL040917HMCZPCA4", "H3224733", "2015-09-07", "2016-09-07", "Puebla", "Cholula", "2025-05-10", "14:30 PM", "Renovación");
-            arr[0].setEstadoCitaActivo(false); // cambio el primer registro a Inactivo
-            
-            arrIndex = 5;
+            idCita = arrIndex;
 
             switch (opc) {
                 case 1: // crear cita
@@ -102,7 +108,7 @@ public class Registros {
                     System.out.print("CURP: ");
                     curpString = myInput.nextLine();
                     
-                    arr[arrIndex] = new Cita(nameString, apePString, apeMString, fechaString, curpString);  //GUARDA en el arreglo de objetos
+                    arr[arrIndex] = new Cita(nameString, apePString, apeMString, fechaString, curpString, idCita);  //GUARDA en el arreglo de objetos
                     System.out.println("    Autenticado");  // se hizo un nuevo registro
                     System.out.print("    Presiona [ENTER] para continuar ");
                     getch();
@@ -154,6 +160,8 @@ public class Registros {
                     motivoString = myInput.nextLine();
                     arr[arrIndex].setMotivoCita(motivoString);
                     
+                    arr[arrIndex].setIdCita(idCita);
+                    
                     System.out.println("    Tu cita ha sido agendada correctamente");  // se hizo un nuevo registro
                     System.out.print("    Presiona [ENTER] para continuar ");
                     getch();
@@ -161,6 +169,7 @@ public class Registros {
 
 
                     arrIndex += 1;
+                    idCita += 1;
                     getch();
                     break;
                     case 2: // ver citas
@@ -169,27 +178,111 @@ public class Registros {
                     System.out.print("CURP: ");
                     curpString = myInput.nextLine();
                     
+                    int contadorCitas = 0;
+                    System.out.println("No. ||   Motivo    ||  Lugar (estado, ciudad) ||    fecha    ||    hora    ||  estado de la cita  ");
+                    System.out.println("-------------------------------------------------------------------------------------------------");
                     for (Cita cita : arr) {
                         if (cita != null) {
                             if(curpString.equals(cita.getCurp())){
-                                clearScreen();
-                                historialCitas[historyIndex] = new Cita(cita.getNombres(), cita.getApellido_Paterno(), cita.getApellido_Materno(), cita.getFecha_Nacimiento(), cita.getCurp(), cita.getNumero_Pasaporte(), cita.getFecha_Expedicion(), cita.getFecha_Vencimiento(), cita.getEstadoSRE(), cita.getCiudadSRE(), cita.getFechaCita(), cita.getHoraCita(), cita.getMotivoCita());
+                                // clearScreen();
+                                // historialCitas[historyIndex] = new Cita(cita.getNombres(), cita.getApellido_Paterno(), cita.getApellido_Materno(), cita.getFecha_Nacimiento(), cita.getCurp(), cita.getNumero_Pasaporte(), cita.getFecha_Expedicion(), cita.getFecha_Vencimiento(), cita.getEstadoSRE(), cita.getCiudadSRE(), cita.getFechaCita(), cita.getHoraCita(), cita.getMotivoCita());
+                                System.out.println("[" + (contadorCitas + 1) + "] ||" + cita.getMotivoCita() + "   ||     " + cita.getEstadoSRE() + ", " + cita.getCiudadSRE() + "     || " + cita.getFechaCita() + "  ||  " + cita.getHoraCita() + "  || " + cita.getEstadoCita());
+                                contadorCitas+=1;
                                 historyIndex += 1;
                             }
                         }
                     }
-                    int contadorCitas = 0;
-                    System.out.println("No. ||   Motivo    ||  Lugar (estado, ciudad) ||    fecha    ||    hora    ||  estado de la cita  ");
-                    System.out.println("-------------------------------------------------------------------------------------------------");
-                    for (Cita cita : historialCitas) {
-                        if (cita != null) {
-                            System.out.println("[" + (contadorCitas + 1) + "] ||" + cita.getMotivoCita() + "   ||     " + cita.getEstadoSRE() + ", " + cita.getCiudadSRE() + "     || " + cita.getFechaCita() + "  ||  " + cita.getHoraCita() + "  || " + cita.getEstadoCita());
-                            contadorCitas+=1;
-                        }
-                    }
+                    System.out.print("¿Deseas modificar/cancelar alguna cita? (Si/No): ");
+                    String choice = myInput.nextLine();
+                    int intChoice;
+                    if (choice.equalsIgnoreCase("si")) {
+                        clearScreen();
+                        myInput.nextInt(); //resetea scanner para trabajar con int
 
-                    // vaciamos la lista de historialCitas para futuras consultas
-                    limpiarHistorialCitas(historialCitas);
+                        System.out.println("No. ||   Motivo    ||  Lugar (estado, ciudad) ||    fecha    ||    hora    ||  estado de la cita  ");
+                        System.out.println("-------------------------------------------------------------------------------------------------");        
+                        for (Cita cita : arr) {
+                            if (cita != null) {
+                                if(curpString.equals(cita.getCurp())){
+                                    System.out.println("[" + idCita + "] ||" + cita.getMotivoCita() + "   ||     " + cita.getEstadoSRE() + ", " + cita.getCiudadSRE() + "     || " + cita.getFechaCita() + "  ||  " + cita.getHoraCita() + "  || " + cita.getEstadoCita());
+                                    // contadorCitas+=1;
+                                    historyIndex += 1;
+                                }
+                            }
+                        }
+                        System.out.print("Elige el registro a modificar: ");
+                        intChoice = myInput.nextInt();
+                        boolean running2 = true;
+                        do{
+                            clearScreen();
+                            System.out.println("REGISTRO SELECCIONADO:");
+                            System.out.println("No. ||   Motivo    ||  Lugar (estado, ciudad) ||    fecha    ||    hora    ||  estado de la cita  ");
+                            System.out.println("-------------------------------------------------------------------------------------------------");        
+                            // cita seleccionada a modificar
+                            System.out.println("[" + idCita + "] ||" + arr[idCita].getMotivoCita() + "   ||     " + arr[idCita].getEstadoSRE() + ", " + arr[idCita].getCiudadSRE() + "     || " + arr[idCita].getFechaCita() + "  ||  " + arr[idCita].getHoraCita() + "  || " + arr[idCita].getEstadoCita());
+
+    
+                            System.out.println("    Elija una modificación: ");
+                            System.out.println("        [1] Lugar");
+                            System.out.println("        [2] Fecha y hora");
+                            System.out.println("        [3] Cancelar");
+                            System.out.print("    Su elección: ");
+                            intChoice = myInput.nextInt();
+                            myInput.nextLine(); // resetea el scanner
+                            switch (intChoice) {
+                                case 1:
+                                    System.out.print("Estado donde deseas tomar tu cita: ");
+                                    estadoString = myInput.nextLine();
+                                    arr[idCita].setEstadoSRE(estadoString);
+                                    
+                                    System.out.print("Ciudad donde deseas tomar tu cita: ");
+                                    ciudadString = myInput.nextLine();
+                                    arr[idCita].setCiudadSRE(ciudadString);
+                                    
+                                    break;
+                                case 2:
+                                    System.out.print("Fecha de tu cita: ");
+                                    fechaCitaString = myInput.nextLine();
+                                    arr[idCita].setFechaCita(fechaCitaString);
+                
+                                    System.out.print("Hora de tu cita: ");
+                                    horaCitaString = myInput.nextLine();
+                                    arr[idCita].setHoraCita(horaCitaString);
+                                    
+                                    break;
+                                case 3:   
+                                    System.out.print("¿Deseas cancelar tu cita? (Si/No): ");
+                                    choice = myInput.nextLine();
+                                    if (choice.equalsIgnoreCase("Si")) {
+                                        try {
+                                            arr[idCita].setEstadoCitaActivo(false);
+                                            clearScreen();
+                                            Thread.sleep(700);
+                                            System.out.print("Tu cita ha sido cancelada correctamente");
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                    } else {
+                                        System.out.print("Tu cita no ha sido modificada");
+                                    }
+                                    break;
+                            }
+                            clearScreen();
+                            try {
+                                System.out.println("Tu cita ha sido modificada correctamente");
+                                Thread.sleep(500);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            myInput.nextLine(); // por si a caso
+                            System.out.print("¿Desea modificar otro aspecto de su cita? (Si/No): ");
+                            choice = myInput.nextLine();
+                            if (choice.equalsIgnoreCase("No")) {
+                                running2 = false;
+                            }
+                        } while(running2);
+                    }
+                    idCita = arrIndex;
                     System.out.print("    Presiona [ENTER] para continuar ");
                     getch();
                     break;

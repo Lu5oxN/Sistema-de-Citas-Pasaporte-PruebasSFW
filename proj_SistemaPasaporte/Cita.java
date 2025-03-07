@@ -14,6 +14,7 @@ public class Cita {
     private String motivoCita;
 
     private String estadoCita; //activa, cancelada.
+    private int idCita;
     
     
     // CONSTRUCTOR
@@ -21,16 +22,16 @@ public class Cita {
         this.estadoCita = "activa";
     }
     // inicializar una cita con datos más básicos
-    public Cita(String nombres, String apellido_Paterno, String apellido_Materno, String fecha_Nacimiento, String curp){
+    public Cita(String nombres, String apellido_Paterno, String apellido_Materno, String fecha_Nacimiento, String curp, int idCita){
         this.nombres = nombres;
         this.apellido_Paterno = apellido_Paterno;
         this.apellido_Materno = apellido_Materno;
         this.fecha_Nacimiento = fecha_Nacimiento;
         this.curp = curp;
-        this.estadoCita = "activa";
+        this.estadoCita = "Activa";
     }
     // inicializar una cita con todos sus datos (solo para en las pruebas tener ya casos registrados, en las otras se van registrando poco a poco)
-    public Cita(String nombres, String apellido_Paterno, String apellido_Materno, String fecha_Nacimiento, String curp, String numero_Pasaporte, String fecha_Expedicion, String fecha_Vencimiento, String estadoSRE, String ciudadSRE, String fechaCita, String horaCita, String motivoCita){
+    public Cita(String nombres, String apellido_Paterno, String apellido_Materno, String fecha_Nacimiento, String curp, String numero_Pasaporte, String fecha_Expedicion, String fecha_Vencimiento, String estadoSRE, String ciudadSRE, String fechaCita, String horaCita, String motivoCita, int idCita){
         this.nombres = nombres;
         this.apellido_Paterno = apellido_Paterno;
         this.apellido_Materno = apellido_Materno;
@@ -48,6 +49,7 @@ public class Cita {
         this.horaCita = horaCita;
         this.motivoCita = motivoCita;
         this.estadoCita = "Activa";
+        this.idCita = idCita;
     }
 
 
@@ -106,6 +108,10 @@ public class Cita {
         }
     }
 
+    public void setIdCita(int idCita) {
+        this.idCita = idCita;
+    }
+
     /************.GET.**************/
     // Registrar información personal
     public String getNombres() {
@@ -151,6 +157,9 @@ public class Cita {
     }
     public String getEstadoCita() {
         return estadoCita;
+    }
+    public int getIdCita() {
+        return idCita;
     }
     
     /************.CLASS METHODS.**************/
