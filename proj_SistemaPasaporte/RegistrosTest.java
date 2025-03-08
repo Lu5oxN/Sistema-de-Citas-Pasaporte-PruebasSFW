@@ -1,11 +1,13 @@
 package proj_SistemaPasaporte;
+import java.util.*; 
+import org.junit.Test;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 
 public class RegistrosTest {
     private Cita[] citaTest;
+    private Date hoy = new Date();
 
-    @BeforeEach
     void setup(){
         citaTest[0] = new Cita("Lucio", "Ruiz", "Sepulveda", "2004-09-17", "RUSL040917HMCZPCA4", "H3224733", "2015-09-07", "2016-09-07", "Puebla", "Cholula", "2025-03-18", "10:40 AM", "Renovación", 0);
         citaTest[1] = new Cita("Elena", "Vargas", "Jiménez", "1999-12-08", "VAJE991208FMCZPCA6", "V7890123", "2021-09-28", "2026-09-28", "Querétaro", "Santiago de Querétaro", "2025-04-18", "13:00 PM", "Primera vez", 1);
@@ -14,8 +16,12 @@ public class RegistrosTest {
         citaTest[4] = new Cita("Sofía", "Hernández", "González", "2001-07-05", "HEGS010705FMCZPCA9", "H5678901", "2022-05-10", "2027-05-10", "Nuevo León", "Monterrey", "2025-04-10", "11:15 AM", "Primera vez", 4);  
     }
 
-    @AfterEach
     void after(){
         Registros.limpiarHistorialCitas(citaTest);
+    }
+    
+    @Test
+    void correctDate(){
+        
     }
 }
