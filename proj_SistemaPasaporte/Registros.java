@@ -32,23 +32,19 @@ public class Registros {
         System.out.flush();  
     }  
 
-    public static void getch() {
-        Console c =System.console();
-        Reader r = c.reader();
-        double num;
-        try {
-            num = r.read();
-        } catch (IOException e) {
-            e.printStackTrace();
+    private static Scanner scanner = new Scanner(System.in);
+
+    public static char getch() {
+        char ch = '\0'; // Inicializamos con un valor por defecto
+        if (scanner.hasNext()) {
+            ch = scanner.next().charAt(0);
         }
+        return ch;
     }
+    
 
     public static void limpiarHistorialCitas(Cita[] historialCitas) {
-        if (historialCitas != null) { // Verifica que el arreglo no sea null
-            for (int i = 0; i < historialCitas.length; i++) {
-                historialCitas[i] = null;
-            }
-        }
+        historialCitas = new Cita[100];
     }
 
     
@@ -87,8 +83,7 @@ public class Registros {
             System.out.println("            Sistema de citas SRE");
             System.out.println("[1] Agendar Cita   [2] Consultar Citas  [3] Salir");
             System.out.print("\n             Escriba su elección: ");
-            opc = myInput.nextInt();
-            myInput.nextLine();
+            opc = Integer.parseInt(myInput.nextLine());
             clearScreen();
             
             idCita = arrIndex;
@@ -212,6 +207,7 @@ public class Registros {
                         }
                         System.out.print("Elige el registro a modificar: ");
                         intChoice = myInput.nextInt();
+                        myInput.nextLine();
                         idCita = intChoice;
                         boolean running2 = true;
                         do{
@@ -307,6 +303,7 @@ public class Registros {
             }    
         } while (running);
         myInput.close();
+        scanner.close();
         System.out.println("El programa terminó exitosamente");
     }
 }
