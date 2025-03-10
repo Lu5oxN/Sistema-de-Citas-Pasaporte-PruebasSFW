@@ -1,6 +1,7 @@
 package proj_SistemaPasaporte;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -16,10 +17,26 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 public class RegistrosTest {
     private Cita[] citaTest;
     public Date hoy = new Date();
+
+    ByteArrayOutputStream out = new ByteArrayOutputStream();
+    PrintStream originalOut = System.out;
+    InputStream originalIn = System.in;
+
+    @Before
+    public void setStreams() {
+        System.setOut(new PrintStream(out));
+    }
+
+    @After
+    public void restoreInitialStreams() {
+        System.setIn(originalIn);
+        System.setOut(originalOut);
+    }
 
     void setup(){
         citaTest[0] = new Cita("Lucio", "Ruiz", "Sepulveda", "2004-09-17", "RUSL040917HMCZPCA4", "H3224733", "2015-09-07", "2016-09-07", "Puebla", "Cholula", "2025-03-18", "10:40 AM", "Renovación", 0);
@@ -32,35 +49,35 @@ public class RegistrosTest {
     void after(){
         Registros.limpiarHistorialCitas(citaTest);
     }
-    
-    private final ByteArrayOutputStream output = new ByteArrayOutputStream();
-    private final PrintStream originalOut = System.out;
 
-    @Before
-    public void setStreams() {
-        System.setOut(new PrintStream(output));
+    @Test
+    public void unbuntu() {
+        Registros.main(new String[]{});
+        System.out.println("Program executed successfully.");
     }
-
-    @After
-    public void restoreInitialStreams() {
-        System.setOut(originalOut);
-    }
-    
+        
     // PL01 - Hacer cita de una fecha que ya pas'o
     @Test
     public void correctDate(){
-        InputStream originalIn = System.in;
-
-        String input = String.join("\n",
+        try {
+            
+            String input = String.join("\n",
             "1", "Lucio", "Ruiz", "Sepulveda", "2004-09-17", "RUSL040917HMCZPCA4", 
             "", "H3224733", "2015-09-07", "2016-09-07", 
-            "Puebla", "Cuetzalan", "2025-03-08"  // Fecha de la cita
-        );
-        ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
-
+            "Puebla", "Cuetzalan", "2025-03-08",  // Fecha de la cita
+            "10:40 AM", "Renovación"
+            );
+            ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
+            System.setIn(in);
             
-        assertEquals("Hora de tu cita: ", output.toString());
+            Registros.main(new String[]{});
+            
+            String consoleOut = out.toString();
+            assertTrue(consoleOut.contains("Tu cita ha sido agendada correctamente"));
+            // assertEquals("Hora de tu cita: ", consoleOut.trim());
+        } finally {
+            System.setIn(originalIn);
+        }
 
     }
 }
