@@ -1,4 +1,6 @@
 package proj_SistemaPasaporte;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.*; 
 import org.junit.Test;
 import org.junit.jupiter.api.AfterEach;
@@ -20,8 +22,23 @@ public class RegistrosTest {
         Registros.limpiarHistorialCitas(citaTest);
     }
     
+    // PL01 - Hacer cita de una fecha que ya pas'o
     @Test
     void correctDate(){
-        
+        InputStream originalIn = System.in;
+
+        try {
+            String input = "1";
+            ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
+            System.setIn(in);
+
+            input = "Lucio";
+            in = new ByteArrayInputStream(input.getBytes());
+            System.setIn(in);
+
+        } finally {
+            System.setIn(originalIn);
+        }
+
     }
 }
