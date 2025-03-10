@@ -33,87 +33,34 @@ public class RegistrosTest {
         Registros.limpiarHistorialCitas(citaTest);
     }
     
-    private final ByteArrayOutputStream out = new ByteArrayOutputStream();
+    private final ByteArrayOutputStream output = new ByteArrayOutputStream();
+    private final PrintStream originalOut = System.out;
 
     @Before
     public void setStreams() {
-        System.setOut(new PrintStream(out));
+        System.setOut(new PrintStream(output));
     }
 
     @After
     public void restoreInitialStreams() {
-        System.setOut(null);
+        System.setOut(originalOut);
     }
     
     // PL01 - Hacer cita de una fecha que ya pas'o
     @Test
     public void correctDate(){
         InputStream originalIn = System.in;
-        
-        try {
-            String input = "1";
-            ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
-            System.setIn(in);
 
-            input = "Lucio";
-            in = new ByteArrayInputStream(input.getBytes());
-            System.setIn(in);
-
-            input = "Ruiz";
-            in = new ByteArrayInputStream(input.getBytes());
-            System.setIn(in);
-
-            input = "Sepulveda";
-            in = new ByteArrayInputStream(input.getBytes());
-            System.setIn(in);
-
-            input = "2004-09-17";
-            in = new ByteArrayInputStream(input.getBytes());
-            System.setIn(in);
-
-            input = "RUSL040917HMCZPCA4";
-            in = new ByteArrayInputStream(input.getBytes());
-            System.setIn(in);
-            
-            //autenticado, presiona enter para continuar
-            
-            input = "\n";
-            in = new ByteArrayInputStream(input.getBytes());
-            System.setIn(in);
-
-            input = "H3224733";
-            in = new ByteArrayInputStream(input.getBytes());
-            System.setIn(in);
-
-            input = "2015-09-07";
-            in = new ByteArrayInputStream(input.getBytes());
-            System.setIn(in);
-
-            input = "2016-09-07";
-            in = new ByteArrayInputStream(input.getBytes());
-            System.setIn(in);
-            
-            //agendar cita
-
-            input = "Puebla";
-            in = new ByteArrayInputStream(input.getBytes());
-            System.setIn(in);
-
-            input = "Cuetzalan";
-            in = new ByteArrayInputStream(input.getBytes());
-            System.setIn(in);
+        String input = String.join("\n",
+            "1", "Lucio", "Ruiz", "Sepulveda", "2004-09-17", "RUSL040917HMCZPCA4", 
+            "", "H3224733", "2015-09-07", "2016-09-07", 
+            "Puebla", "Cuetzalan", "2025-03-08"  // Fecha de la cita
+        );
+        ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
 
             
-            input = "2025-03-08";               //      fecha de interés (de la cita)
-            in = new ByteArrayInputStream(input.getBytes());
-            System.setIn(in);
-
-            System.setOut(new PrintStream(out, true));
-            
-            assertEquals("Hora de tu cita: ", out.toString());
-        } finally {
-            System.setIn(originalIn);
-        }
+        assertEquals("Hora de tu cita: ", output.toString());
 
     }
 }
