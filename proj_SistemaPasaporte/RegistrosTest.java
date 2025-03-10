@@ -1,14 +1,25 @@
 package proj_SistemaPasaporte;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-import java.util.*; 
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.*;
+
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 
 public class RegistrosTest {
     private Cita[] citaTest;
-    private Date hoy = new Date();
+    public Date hoy = new Date();
 
     void setup(){
         citaTest[0] = new Cita("Lucio", "Ruiz", "Sepulveda", "2004-09-17", "RUSL040917HMCZPCA4", "H3224733", "2015-09-07", "2016-09-07", "Puebla", "Cholula", "2025-03-18", "10:40 AM", "Renovación", 0);
@@ -22,11 +33,23 @@ public class RegistrosTest {
         Registros.limpiarHistorialCitas(citaTest);
     }
     
+    private final ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+    @Before
+    public void setStreams() {
+        System.setOut(new PrintStream(out));
+    }
+
+    @After
+    public void restoreInitialStreams() {
+        System.setOut(null);
+    }
+    
     // PL01 - Hacer cita de una fecha que ya pas'o
     @Test
-    void correctDate(){
+    public void correctDate(){
         InputStream originalIn = System.in;
-
+        
         try {
             String input = "1";
             ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
@@ -36,6 +59,58 @@ public class RegistrosTest {
             in = new ByteArrayInputStream(input.getBytes());
             System.setIn(in);
 
+            input = "Ruiz";
+            in = new ByteArrayInputStream(input.getBytes());
+            System.setIn(in);
+
+            input = "Sepulveda";
+            in = new ByteArrayInputStream(input.getBytes());
+            System.setIn(in);
+
+            input = "2004-09-17";
+            in = new ByteArrayInputStream(input.getBytes());
+            System.setIn(in);
+
+            input = "RUSL040917HMCZPCA4";
+            in = new ByteArrayInputStream(input.getBytes());
+            System.setIn(in);
+            
+            //autenticado, presiona enter para continuar
+            
+            input = "\n";
+            in = new ByteArrayInputStream(input.getBytes());
+            System.setIn(in);
+
+            input = "H3224733";
+            in = new ByteArrayInputStream(input.getBytes());
+            System.setIn(in);
+
+            input = "2015-09-07";
+            in = new ByteArrayInputStream(input.getBytes());
+            System.setIn(in);
+
+            input = "2016-09-07";
+            in = new ByteArrayInputStream(input.getBytes());
+            System.setIn(in);
+            
+            //agendar cita
+
+            input = "Puebla";
+            in = new ByteArrayInputStream(input.getBytes());
+            System.setIn(in);
+
+            input = "Cuetzalan";
+            in = new ByteArrayInputStream(input.getBytes());
+            System.setIn(in);
+
+            
+            input = "2025-03-08";               //      fecha de interés (de la cita)
+            in = new ByteArrayInputStream(input.getBytes());
+            System.setIn(in);
+
+            System.setOut(new PrintStream(out, true));
+            
+            assertEquals("Hora de tu cita: ", out.toString());
         } finally {
             System.setIn(originalIn);
         }
