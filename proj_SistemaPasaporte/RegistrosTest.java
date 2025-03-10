@@ -78,6 +78,13 @@ public class RegistrosTest {
         } finally {
             System.setIn(originalIn);
         }
-
     }
+
+    // PL02 - Registrar 100 usuarios, permite modificar y borrar citas
+
+    // PL03 - Validar el CURP que sea el correcto
+
+    // PL04 - No aceptar citas en el rango de atención (horario)
+
+    // PL05 - No permite agendar más de 1 cita activa
 }
