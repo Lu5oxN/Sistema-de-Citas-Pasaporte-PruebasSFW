@@ -22,6 +22,7 @@ public class RegistroCitasUI extends JFrame{
     public RegistroCitasUI() {
         super("Registro de citas para pasaporte");
 
+        // --- Componentes ---
         // Botones
         crearCuentaButton = new JButton("Crear cuenta");
         iniciarSesionButton = new JButton("Iniciar sesión");
@@ -32,13 +33,13 @@ public class RegistroCitasUI extends JFrame{
         correoLabel = new JLabel("Correo:");
         contraLabel = new JLabel("Contraseña:");
 
-        // Panels
-        cardLayout = new CardLayout();
-        mainPanel = new JPanel(cardLayout);
-
         // TextFields
         correoField = new JTextField("", 6);
         contraField = new JTextField("", 6);
+
+        // --- Layouts y Paneles ---
+        cardLayout = new CardLayout();
+        mainPanel = new JPanel(cardLayout);
         
         // Panel inicio
         inicioPanel = new JPanel(new GridBagLayout());
