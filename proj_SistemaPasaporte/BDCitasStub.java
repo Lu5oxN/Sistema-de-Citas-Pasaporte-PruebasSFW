@@ -10,9 +10,7 @@ public class BDCitasStub implements FuenteDatosCitas {
 
     @Override
     public void crearCita(Cita cita) {
-        if (citas.containsKey(cita.getCurp())) {
-            citas.put(cita.getCurp(), cita);
-        }
+        citas.put(cita.getCurp(), cita);
     }
 
     @Override

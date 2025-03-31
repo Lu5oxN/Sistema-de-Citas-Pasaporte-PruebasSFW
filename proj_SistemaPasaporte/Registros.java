@@ -1,4 +1,4 @@
-package proj_SistemaPasaporte.PrevBuilds;
+package proj_SistemaPasaporte;
 import java.io.BufferedInputStream;
 import java.io.Console;
 import java.io.FileInputStream;
