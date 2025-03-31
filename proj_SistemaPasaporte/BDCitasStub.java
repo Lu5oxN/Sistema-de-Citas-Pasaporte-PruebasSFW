@@ -32,7 +32,7 @@ public class BDCitasStub implements FuenteDatosCitas {
     }
 
     @Override
-    public Cita modificarCita(String curp, int opc) {
+    public void modificarCita(String curp, int opc) {
         if (citas.containsKey(curp)) {
             Cita cita = citas.get(curp);
             switch (opc) {
@@ -48,14 +48,12 @@ public class BDCitasStub implements FuenteDatosCitas {
                     cita.setMotivoCita("Pasaporte extraviado");
                     break;
                 case 4:     // cambiar estado.
-                    cita.setEstadoCitaActivo(false);
+                    cita.setEstadoCitaActivo(true);
                     break;
                 default:
                     break;
             }
-            return cita;
         }
-        return null;
     }
     
     @Override
