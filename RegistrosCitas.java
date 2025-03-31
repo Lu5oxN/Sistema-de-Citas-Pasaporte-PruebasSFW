@@ -8,7 +8,7 @@ public class RegistrosCitas {
 
     // inyectar dependencias.
     public RegistrosCitas(FuenteDatosCitas bdCitas) {
-        this.bdCitas = bdCitas; // TO DO:  asdfghjk :o
+        // this.bdCitas = bdCitas; // TO DO:  asdfghjk :o
     } 
     
 }
