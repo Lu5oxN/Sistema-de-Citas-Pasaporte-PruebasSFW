@@ -1,6 +1,9 @@
-package proj_SistemaPasaporte;
+package proj_SistemaPasaporte.tests;
 
 import org.junit.jupiter.api.Test;
+
+import proj_SistemaPasaporte.Cita;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class RegistrosTest {
