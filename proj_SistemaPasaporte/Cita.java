@@ -104,7 +104,7 @@ public class Cita {
         if (opc) {
             this.estadoCita = "Activa";
         } else {
-            this.estadoCita = "Cancelada";
+            this.estadoCita = "Inactiva";
         }
     }
 

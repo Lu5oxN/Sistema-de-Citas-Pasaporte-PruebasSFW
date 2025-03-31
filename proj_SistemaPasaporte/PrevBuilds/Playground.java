@@ -1,4 +1,4 @@
-package proj_SistemaPasaporte;
+package proj_SistemaPasaporte.PrevBuilds;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
@@ -10,7 +10,7 @@ public class Playground {
     
 
     public static void main(String[] args) {
-        String inpuString = "2025-03-10";
+        String inpuString = "2025-04-10";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
         LocalDate inputdaDate = LocalDate.parse(inpuString);
         LocalDate currDate = LocalDate.now();
