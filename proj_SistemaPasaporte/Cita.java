@@ -19,7 +19,7 @@ public class Cita {
     
     // CONSTRUCTOR
     public Cita(){
-        this.estadoCita = "activa";
+        this.estadoCita = "Activa";
     }
     // inicializar una cita con datos más básicos
     public Cita(String nombres, String apellido_Paterno, String apellido_Materno, String fecha_Nacimiento, String curp, int idCita){

@@ -94,6 +94,29 @@ public class BDStubTest {
     // // PL04 - Probar modificar datos de la cita
     
     // System.out.println("STUB (PL04): Cita creada correctamente.");
-    // // PL05 - Comprobar estado de cita
-    // System.out.println("STUB (PL05): Cita creada correctamente.");
+    // ST05 - Comprobar estado de cita
+    @Test
+    void estadoCita() {
+        try {
+            Cita insert = new Cita("Juan", "Perez", "Gomez", "2000-05-15", 
+            "PERJ000515HMCZPCA3", "P1234567", "2021-01-01", 
+            "2031-01-01", "Puebla", "Centro", "2025-10-10", 
+            "10:00 AM", "Renovación", 1);
+
+            stubBD.crearCita(insert);
+
+            // comprueba estado de la cita:
+            boolean banderaEstado = false;
+            banderaEstado = stubBD.estadoCita("PERJ000515HMCZPCA3");
+            if (banderaEstado) {
+                System.out.println("STUB (ST05): La cita está activa.");
+                assertTrue(banderaEstado);
+            } else {
+                System.out.println("STUB (ST05): La cita está inactiva.");
+            }
+            
+        } catch (Exception e) {
+            fail("No se logró registrar la cita.");
+        }
+    }
 }

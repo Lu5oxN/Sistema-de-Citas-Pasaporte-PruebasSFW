@@ -82,8 +82,9 @@ public class BDCitasStub implements FuenteDatosCitas {
             LocalDate currDate = LocalDate.now();
             if (!currDate.isBefore(inputdaDate)) {
                 cita.setEstadoCitaActivo(false);
+            } else if (cita.getEstadoCita() == "Inactiva") {
+                cita.setEstadoCitaActivo(true);
             }
-            cita.setEstadoCitaActivo(true);
         }
     }
 }
