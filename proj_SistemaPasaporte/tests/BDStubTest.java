@@ -2,8 +2,8 @@
 
 import org.junit.jupiter.api.Test;
 
-import proj_SistemaPasaporte.BDCitasStub;
 import proj_SistemaPasaporte.Cita;
+import proj_SistemaPasaporte.PrevBuilds.Stubs.BDCitasStub;
 
 import static org.junit.jupiter.api.Assertions.*;
 
