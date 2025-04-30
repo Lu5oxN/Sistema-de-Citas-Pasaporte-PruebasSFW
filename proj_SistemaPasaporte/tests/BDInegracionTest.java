@@ -20,11 +20,19 @@ public class BDInegracionTest {
         System.out.println("FuenteDeDatos inicializada: " + this.fuenteDeDatos);
     }
 
+    // IT01 - Probar creación de cita en BD Stub
+    @Test
+    public void crearCita() {
+    }
+    // IT02 - Probar búsqueda de cita por datos (CURP)
     @Test
     public void buscarCita(){
         assertNotNull(this.fuenteDeDatos, "fuenteDeDatos no debería ser null aquí");
         Cita citaEncontrada = this.fuenteDeDatos.buscarCita("PERJ000515HMCZPCA3");
-        System.err.println(citaEncontrada.getCurp());
-        assertNotNull(citaEncontrada, "La cita debería encontrarse en la BD");
+        assertNotNull(citaEncontrada, "La cita no se encontró.");
+        System.out.println("Prueba (IT02): Cita encontrada.");
+        System.out.println("Datos: " + citaEncontrada.getCurp() +
+                        " " +citaEncontrada.getNombres() + " " +
+                        citaEncontrada.getFechaCita() + " " + citaEncontrada.getEstadoCita());
     }
 }

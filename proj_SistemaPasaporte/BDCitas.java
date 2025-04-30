@@ -26,8 +26,15 @@ public class BDCitas implements FuenteDatosCitas {
 
     @Override
     public void crearCita(Cita cita) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'crearCita'");
+        String sql = "INSERT INTO citas  VALUES (null, ?, ?, ?, ?, ?, ?,  ?, ?, ?, ?, ?, null)";
+        try (Connection conn = getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setString(1, cita.getNombres());
+
+                pstmt.executeUpdate(); // executeUpdate para INSERT, UPDATE and DELETE
+        } catch (SQLException e) {
+            System.err.println("Error al crear una cita en BD: " + e.getMessage());
+        }
     }
 
     @Override
@@ -35,10 +42,9 @@ public class BDCitas implements FuenteDatosCitas {
         String sql = "SELECT * FROM citas WHERE Curp = ?";
         Cita cita = null;
         try (Connection conn = getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, curp);
-            ResultSet rs = pstmt.executeQuery();
+            ResultSet rs = pstmt.executeQuery(); // executeQuery es para Select (regresan datos)
 
             if (rs.next()) {
                  // Crear objeto Cita a partir de los datos del ResultSet
@@ -68,15 +74,31 @@ public class BDCitas implements FuenteDatosCitas {
 
     @Override
     public boolean eliminarCita(String curp) {
-        // TODO Auto-generated method stub
-        
+        String sql = "DELETE FROM citas WHERE Curp = ?";
+        Cita cita = null;
+        try (Connection conn = getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setString(1, curp);
+                ResultSet rs = pstmt.executeQuery();
+        } catch (SQLException e) {
+            System.err.println("Error al borrar la cita en la BD: " + e.getMessage());
+        }
         return true;
     }
 
     @Override
     public void modificarCita(String curp, int opc) {
-        // TODO Auto-generated method stub
-
+        String sql = "DELETE FROM citas WHERE Curp = ?";
+        Cita cita = null;
+        try (Connection conn = getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setString(1, curp);
+                ResultSet rs = pstmt.executeQuery();
+        } catch (SQLException e) {
+            System.err.println("Error al borrar la cita en la BD: " + e.getMessage());
+        }
+        return true;
+        
     }
 
     @Override
