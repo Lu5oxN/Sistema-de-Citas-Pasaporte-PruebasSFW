@@ -1,0 +1,9 @@
+{
+    "java.project.sourcePaths": [
+        "."
+    ],
+    "java.project.referencedLibraries": [
+        "c:\\databasejava\\lib\\mysql-connector-j-9.3.0.jar",
+        "c:\\Users\\aless\\Documents\\GITHUB\\Sistema-de-Citas-Pasaporte-PruebasSFW\\lib\\junit-platform-console-standalone-1.12.0.jar"
+    ]
+}
