@@ -7,10 +7,10 @@ public interface FuenteDatosCitas {
 
     boolean eliminarCita(String curp);
 
-    void modificarCita(String curp, int opc);
+    void modificarCita(String curp, int opc, String cambio);
 
-    void validarFechaCita(String curp);
+    boolean validarFechaCita(String curp);
 
-    boolean estadoCita(String curp);
+    void estadoCita(String curp);
     
 }

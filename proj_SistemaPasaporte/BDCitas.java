@@ -1,5 +1,9 @@
 package proj_SistemaPasaporte;
 import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class BDCitas implements FuenteDatosCitas {
 
@@ -26,10 +30,45 @@ public class BDCitas implements FuenteDatosCitas {
 
     @Override
     public void crearCita(Cita cita) {
+        /*
+            create table Citas (
+            idCita INT auto_increment primary key,
+            nombre varchar(20) not null,
+            apellido_paterno varchar(20) not null,
+            apellido_materno varchar(20) not null,
+            fecha_nacimiento date not null,
+            curp varchar(18) not null,
+            
+            num_pasaporte varchar(10) not null,
+            fecha_expedicion date not null,
+            fecha_vencimiento date not null,
+            
+            ciudad varchar(30) not null,
+            motivo varchar(30) not null,
+            
+            fecha_cita datetime,
+            estatus varchar(10) default 'Activo'
+            );
+         */
         String sql = "INSERT INTO citas  VALUES (null, ?, ?, ?, ?, ?, ?,  ?, ?, ?, ?, ?, null)";
         try (Connection conn = getConnection();
             PreparedStatement pstmt = conn.prepareStatement(sql)) {
                 pstmt.setString(1, cita.getNombres());
+                pstmt.setString(2, cita.getApellido_Paterno());
+                pstmt.setString(3, cita.getApellido_Materno());
+                pstmt.setString(4, cita.getFecha_Nacimiento());
+                pstmt.setString(5, cita.getCurp());
+
+                pstmt.setString(6, cita.getNumero_Pasaporte());
+                pstmt.setString(7, cita.getFecha_Expedicion());
+                pstmt.setString(8, cita.getFecha_Vencimiento());
+
+                pstmt.setString(9, cita.getCiudadSRE());
+                pstmt.setString(10, cita.getMotivoCita());
+                pstmt.setString(10, cita.getMotivoCita());
+
+                String date = cita.getFechaCita() + " " + cita.getHoraCita();
+                pstmt.setString(11, date);
 
                 pstmt.executeUpdate(); // executeUpdate para INSERT, UPDATE and DELETE
         } catch (SQLException e) {
@@ -47,7 +86,7 @@ public class BDCitas implements FuenteDatosCitas {
             ResultSet rs = pstmt.executeQuery(); // executeQuery es para Select (regresan datos)
 
             if (rs.next()) {
-                 // Crear objeto Cita a partir de los datos del ResultSet
+                     // Crear objeto Cita a partir de los datos del ResultSet
                  cita = new Cita(
                     rs.getString("Nombre"),
                     rs.getString("apellido_paterno"),
@@ -79,38 +118,63 @@ public class BDCitas implements FuenteDatosCitas {
         try (Connection conn = getConnection();
             PreparedStatement pstmt = conn.prepareStatement(sql)) {
                 pstmt.setString(1, curp);
-                ResultSet rs = pstmt.executeQuery();
+                pstmt.executeUpdate();
         } catch (SQLException e) {
             System.err.println("Error al borrar la cita en la BD: " + e.getMessage());
+            return false;
         }
         return true;
     }
 
     @Override
-    public void modificarCita(String curp, int opc) {
-        String sql = "DELETE FROM citas WHERE Curp = ?";
+    public void modificarCita(String curp, int opc, String cambio) {
+        String colString;
         Cita cita = null;
-        try (Connection conn = getConnection();
-            PreparedStatement pstmt = conn.prepareStatement(sql)) {
-                pstmt.setString(1, curp);
-                ResultSet rs = pstmt.executeQuery();
-        } catch (SQLException e) {
-            System.err.println("Error al borrar la cita en la BD: " + e.getMessage());
+        switch (opc) {
+            case 1:
+            colString = "Curp";
+            break;
+            case 2:
+            colString = "num_pasaporte";
+            break;
+            case 3:
+            colString = "ciudad";
+            break;
+            case 4:
+            colString = "estatus";
+            break;
+            default:
+            colString = "ciudad";
+            break;
         }
-        return true;
         
+        String sql = "UPDATE citas SET " + colString + " = ? WHERE Curp = ?";
+        try (Connection conn = getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, cambio);
+            pstmt.setString(2, curp);
+            pstmt.executeUpdate(); // executeQuery es para Select (regresan datos)
+        } catch (SQLException e) {
+             System.err.println("Error al buscar la cita en la BD: " + e.getMessage());
+        }
     }
 
     @Override
-    public void validarFechaCita(String curp) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'validarFechaCita'");
+    public boolean validarFechaCita(String fechaCita) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime inputDateTime = LocalDateTime.parse(fechaCita, formatter);
+        LocalDate inputDate = inputDateTime.toLocalDate();
+        LocalDate currDate = LocalDate.now();
+        return inputDate.isAfter(currDate);
     }
 
     @Override
-    public boolean estadoCita(String curp) {
-        // TODO Auto-generated method stub
-        return true;
+    public void estadoCita(String curp) {
+        Cita cita = buscarCita(curp);
+        if (cita.getEstadoCita() != "Inactiva") {
+            boolean active = validarFechaCita(cita.getFechaCita());
+            if(!active) modificarCita(curp, 4, "Inactiva"); 
+        }
     }
 
     public void closeConnection() {

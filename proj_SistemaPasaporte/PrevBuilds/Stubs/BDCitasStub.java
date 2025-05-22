@@ -36,7 +36,7 @@ public class BDCitasStub implements FuenteDatosCitas {
     }
 
     @Override
-    public void modificarCita(String curp, int opc) {
+    public void modificarCita(String curp, int opc, String cambio) {
         if (citas.containsKey(curp)) {
             Cita cita = citas.get(curp);
             switch (opc) {
